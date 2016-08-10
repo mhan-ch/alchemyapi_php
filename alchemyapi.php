@@ -21,17 +21,22 @@ class AlchemyAPI {
 	
 	private $_api_key;
 	private $_ENDPOINTS;
-	private $_BASE_URL = 'http://access.alchemyapi.com/calls';
+	private $_base_url;
+	private $_BASE_HTTP_URL = 'http://access.alchemyapi.com/calls';
+	private $_BASE_HTTPS_URL =  'https://access.alchemyapi.com/calls';
 
 	/**
 	 * Constructor
 	 *
 	 * @param string
+	 * @param boolean
 	 * @return void
 	 */
-	public function __construct($key)  {
+	public function __construct($key, $use_https = false)  {
 		$this->_api_key = $key;
-
+		
+		$this->_base_url = $use_https ? $this->_BASE_HTTPS_URL : $this->_BASE_HTTP_URL;
+			
 		//Initialize the API Endpoints
 		$this->_ENDPOINTS['sentiment']['url'] = '/url/URLGetTextSentiment';
 		$this->_ENDPOINTS['sentiment']['text'] = '/text/TextGetTextSentiment';
@@ -698,7 +703,7 @@ class AlchemyAPI {
 	*/
 	private function analyze($endpoint, $params) {
 		//Insert the base URL
-		$url = $this->_BASE_URL . $endpoint;
+		$url = $this->_base_url . $endpoint;
 
 		//Add the API Key and set the output mode to JSON
 		$params['apikey'] = $this->_api_key;
@@ -726,7 +731,7 @@ class AlchemyAPI {
 		$params['outputMode'] = 'json';
 
 		//Insert the base URL
-		$url = $this->_BASE_URL . $endpoint . '?' . http_build_query($params);
+		$url = $this->_base_url . $endpoint . '?' . http_build_query($params);
 		
 		//Create the HTTP header
 		$header = array('http' => array('method' => 'POST','header'=>'Content-Type: application/x-www-form-urlencode', 'content'=>$imageData));
@@ -766,4 +771,3 @@ if (php_sapi_name() == 'cli' && isset($argv) && count($argv) == 2) {
 }
 
 ?>
-
