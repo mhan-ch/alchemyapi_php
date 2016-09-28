@@ -1,6 +1,6 @@
 # alchemyapi_php #
 
-A software development kit (sdk) for AlchemyAPI using PHP
+A software development kit (sdk) for AlchemyAPI using PHP - **_Please note that this legacy AlchemyAPI SDK is no longer supported by IBM. Please use the Watson SDKs https://github.com/watson-developer-cloud?utf8=✓&query=sdk_**
 
 
 
